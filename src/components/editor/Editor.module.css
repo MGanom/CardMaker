@@ -1,8 +1,9 @@
-@value makerGreen from '../../styles/Colors.css';
+@value makerGreen, makerLightGrey from '../../styles/Colors.css';
 
 .editor {
   flex-basis: 50%;
-  background-color: aquamarine;
+  border-right: 3px solid makerLightGrey;
+  padding: 0.5em 2em;
 }
 
 .title {
