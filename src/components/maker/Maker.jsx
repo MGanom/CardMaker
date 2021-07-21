@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Card from '../card/Card';
 import Editor from '../editor/Editor';
 import Footer from '../footer/Footer';
 import Header from '../header/Header';
@@ -57,11 +58,16 @@ const Maker = ({ authService }) => {
     });
   });
 
+  const addCard = card => {
+    const updated = [...cards, card];
+    setCards(updated);
+  };
+
   return (
     <section className={styles.maker}>
       <Header onLogout={onLogout} />
       <div className={styles.container}>
-        <Editor cards={cards} />
+        <Editor cards={cards} addCard={addCard} />
         <Preview cards={cards} />
       </div>
       <Footer />
