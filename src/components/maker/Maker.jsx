@@ -6,52 +6,31 @@ import Header from '../header/Header';
 import Preview from '../preview/Preview';
 import styles from './Maker.module.css';
 
-const Maker = ({ FileInput, authService }) => {
-  const [cards, setCards] = useState({
-    1: {
-      id: '1',
-      name: 'Moon',
-      company: 'MoonCorp',
-      theme: 'light',
-      title: 'FrontEnd Developer',
-      email: 'chewy111@naver.com',
-      message: 'Code for Horde',
-      fileName: 'none',
-      fileURL: null,
-    },
-    2: {
-      id: '2',
-      name: 'MoonGa',
-      company: 'MoonCorp',
-      theme: 'colorful',
-      title: 'FrontEnd Developer',
-      email: 'chewy111@naver.com',
-      message: 'Code for Horde',
-      fileName: 'none',
-      fileURL: null,
-    },
-    3: {
-      id: '3',
-      name: 'MoonGanom',
-      company: 'MoonCorp',
-      theme: 'dark',
-      title: 'FrontEnd Developer',
-      email: 'chewy111@naver.com',
-      message: 'Code for Horde',
-      fileName: 'none',
-      fileURL: null,
-    },
-  });
-
+const Maker = ({ FileInput, authService, cardRepo }) => {
   const history = useHistory();
+  const historyState = history?.location?.state;
+  const [cards, setCards] = useState({});
+  const [userId, setUserId] = useState(historyState && historyState.id);
 
   const onLogout = () => {
     authService.logout();
   };
 
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    const stopSync = cardRepo.syncCards(userId, cards => {
+      setCards(cards);
+    });
+    return () => stopSync();
+  }, [userId]);
+
+  useEffect(() => {
     authService.onAuthChange(user => {
-      if (!user) {
+      if (user) {
+        setUserId(user.uid);
+      } else {
         history.push('/');
       }
     });
@@ -63,6 +42,7 @@ const Maker = ({ FileInput, authService }) => {
       updated[card.id] = card;
       return updated;
     });
+    cardRepo.saveCard(userId, card);
   };
 
   const deleteCard = card => {
@@ -71,6 +51,7 @@ const Maker = ({ FileInput, authService }) => {
       delete updated[card.id];
       return updated;
     });
+    cardRepo.removeCard(userId, card);
   };
 
   return (
