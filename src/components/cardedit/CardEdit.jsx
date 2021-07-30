@@ -3,10 +3,8 @@ import Button from '../button/Button';
 import styles from './CardEdit.module.css';
 
 const CardEdit = ({ FileInput, card, updateCard, deleteCard }) => {
-  const { name, company, title, email, message, theme, fileName, fileURL } =
-    card;
+  const { name, company, title, email, message, theme, fileName } = card;
 
-  const formRef = useRef();
   const nameRef = useRef();
   const companyRef = useRef();
   const themeRef = useRef();
