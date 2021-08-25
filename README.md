@@ -6,6 +6,12 @@ Firebase와 Cloudinary를 활용하여 명함 만드는 기능을 담은 웹페�
 ## 진행 기간
 210719 ~ 210730
 
+## 사용 기술
+HTML, CSS(Post-CSS), JavaScript, React(CRA, React Router)
+
+## 사용 서비스
+Firebase, Cloudinary
+
 ## 페이지 구성
 ### 1. 로그인
 ![image](https://user-images.githubusercontent.com/80687334/130809219-f82014c0-58d2-40f7-8600-87cf09f7c24a.png)
